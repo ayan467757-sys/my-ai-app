@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from google import genai
@@ -5,7 +6,7 @@ from google import genai
 app = FastAPI()
 
 client = genai.Client(
-    api_key="PASTE_YOUR_API_KEY_HERE"
+    api_key=os.environ["GEMINI_API_KEY"]
 )
 
 class ChatRequest(BaseModel):
