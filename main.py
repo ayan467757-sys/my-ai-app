@@ -1,0 +1,24 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+from google import genai
+
+app = FastAPI()
+
+client = genai.Client(
+    api_key="PASTE_YOUR_API_KEY_HERE"
+)
+
+class ChatRequest(BaseModel):
+    message: str
+
+@app.get("/")
+def home():
+    return {"message": "My AI App is working!"}
+
+@app.post("/chat")
+def chat(request: ChatRequest):
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=request.message
+    )
+    return {"reply": response.text}
